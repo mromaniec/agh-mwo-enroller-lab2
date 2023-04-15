@@ -17,9 +17,14 @@ public class ParticipantRestController {
 	@Autowired
 	ParticipantService participantService;
 
+// Sortowanie listy wyników po loginie w kolejności malejącej - DESC
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<?> getParticipants() {
-		Collection<Participant> participants = participantService.getAll();
+	public ResponseEntity<?> getParticipants(@RequestParam(value = "sortBy", defaultValue = "") String sortBy,
+											 @RequestParam(value = "sortOrder", defaultValue = "") String sortOrder,
+											 @RequestParam(value = "key", defaultValue = "") String key) {
+
+		Collection<Participant> participants = participantService.getAll(sortBy, sortOrder, key);
 		return new ResponseEntity<Collection<Participant>>(participants, HttpStatus.OK);
 	}
 
